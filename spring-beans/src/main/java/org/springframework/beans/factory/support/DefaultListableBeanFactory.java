@@ -988,10 +988,13 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 			this.frozenBeanDefinitionNames = null;
 		}
-
+//		if (beanName.equals("t")){
+//			this.freezeConfiguration();
+//		}
 		if (existingDefinition != null || containsSingleton(beanName)) {
 			resetBeanDefinition(beanName);
 		}
+
 		else if (isConfigurationFrozen()) {
 			clearByTypeCache();
 		}

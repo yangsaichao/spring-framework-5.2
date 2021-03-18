@@ -7,10 +7,10 @@ import java.util.Map;
 
 
 public interface IndexDao1 {
-	@Select("select * from zl")
+	@Select("select * from dao1")
 	public List<Map<String,Object>> list();
 
 
-	@Select("select * from zl")
+	@Select("select * from dao1")
 	public List<Map<String,Object>> xxxx();
 }

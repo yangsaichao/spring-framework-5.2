@@ -87,7 +87,10 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
 		this();
+
+		//配置类的注册----other
 		register(componentClasses);
+		//就是spring容器初始化的过程
 		refresh();
 	}
 

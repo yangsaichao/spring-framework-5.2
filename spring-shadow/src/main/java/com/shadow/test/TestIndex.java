@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.AnnotatedGenericBeanDefiniti
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.stereotype.Component;
-import xx.B;
 import com.shadow.app.Appconfig;
 import com.shadow.service.IndexService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,51 +24,47 @@ import javax.activation.DataSource;
 import java.lang.reflect.Proxy;
 import java.sql.Driver;
 
+
+
 @Slf4j(topic = "e")
 public class TestIndex {
 	public static void main(String[] args) {
 
+		/**
+		 *
+		 * 注入mapper对象
+		 * <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		 *   <property name="mapperInterface" value="com.UserMapper" />
+		 *   <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		 * </bean>
+		 *
+		 * MapperFactoryBean  --->com.UserMapper  ----Object --add  spring
+		 *
+		 *
+		 *
+		 *
+		 */
+
+//
 
 
-		AnnotationConfigApplicationContext ac
-				= new AnnotationConfigApplicationContext();
+
+		/**
+		 * 假设 官网没错
+		 */
 
 
-		ac.register(Appconfig.class);
-		ac.refresh();
 
-		IndexService bean = ac.getBean(IndexService.class);
+
+
+		//显示的去得到applicationContext对象
+		//书写格式
+		AnnotationConfigApplicationContext applicationContext
+				= new AnnotationConfigApplicationContext(Appconfig.class);
+
+
+		IndexService bean = applicationContext.getBean(IndexService.class);
 		bean.list();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////
 //		GenericBeanDefinition genericBeanDefinition = new GenericBeanDefinition();

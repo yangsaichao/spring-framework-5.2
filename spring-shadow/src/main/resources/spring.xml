@@ -24,9 +24,14 @@
 <!--			<property name="c" ref="c"></property>-->
 <!--		</bean>-->
 
-	<bean id="indexDao" class="com.shadow.test.CustomFactoryBean">
-		<property name="mapperInterface" value="com.shadow.dao.IndexDao1"></property>
-	</bean>
+<!--	<bean id="indexDao" class="com.shadow.test.CustomFactoryBean">-->
+<!--		<property name="mapperInterface" value="com.shadow.dao.IndexDao"></property>-->
+<!--	</bean>-->
 
+<!--	<bean id="indexDao1" class="com.shadow.test.CustomFactoryBean">-->
+<!--		<property name="mapperInterface" value="com.shadow.dao.IndexDao1"></property>-->
+<!--	</bean>-->
+
+<!--	<bean id="testService" ></bean>-->
 
 </beans>
