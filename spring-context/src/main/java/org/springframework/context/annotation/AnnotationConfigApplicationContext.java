@@ -86,6 +86,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * {@link Configuration @Configuration} classes
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
+		// 会去调用父类的无参构造方法 ---this.beanFactory = new DefaultListableBeanFactory();
 		this();
 
 		//配置类的注册----other

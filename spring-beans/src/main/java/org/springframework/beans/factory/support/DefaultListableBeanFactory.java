@@ -144,6 +144,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	@Nullable
 	private String serializationId;
 
+	//允许覆盖bd
 	/** Whether to allow re-registration of a different definition with the same name. */
 	private boolean allowBeanDefinitionOverriding = true;
 
@@ -159,13 +160,14 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 	/** Map from dependency type to corresponding autowired value. */
 	private final Map<Class<?>, Object> resolvableDependencies = new ConcurrentHashMap<>(16);
-
+	//当spring把所有符合规则的bean扫描出来之后，变成beandefinition之后缓存在这map里面
 	/** Map of bean definition objects, keyed by bean name. */
 	private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
 
 	/** Map from bean name to merged BeanDefinitionHolder. */
 	private final Map<String, BeanDefinitionHolder> mergedBeanDefinitionHolders = new ConcurrentHashMap<>(256);
 
+	//缓存了依赖项 key是依赖项的类型 value是名字
 	/** Map of singleton and non-singleton bean names, keyed by dependency type. */
 	private final Map<Class<?>, String[]> allBeanNamesByType = new ConcurrentHashMap<>(64);
 
@@ -489,24 +491,43 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		return getBeanNamesForType(type, true, true);
 	}
 
+	/**
+	 *  通过bean的类型  获取bean的名字
+	 *
+	 */
 	@Override
 	public String[] getBeanNamesForType(@Nullable Class<?> type, boolean includeNonSingletons, boolean allowEagerInit) {
+		//这个判断只有第一个由意义!isConfigurationFrozen()
+		//判断是否冻结了bd，如果冻结则返回的false，则不会进if-则会走缓存
+		//如果没有冻结则会进if---表示要去查找
 		if (!isConfigurationFrozen() || type == null || !allowEagerInit) {
 			return doGetBeanNamesForType(ResolvableType.forRawClass(type), includeNonSingletons, allowEagerInit);
 		}
+		//第一次这找a-b缓存不存在的
 		Map<Class<?>, String[]> cache =
 				(includeNonSingletons ? this.allBeanNamesByType : this.singletonBeanNamesByType);
 		String[] resolvedBeanNames = cache.get(type);
+
 		if (resolvedBeanNames != null) {
 			return resolvedBeanNames;
 		}
+		//如果缓存中没有则查找 和前面进if是一样的
 		resolvedBeanNames = doGetBeanNamesForType(ResolvableType.forRawClass(type), includeNonSingletons, true);
+		//找到了则 put
 		if (ClassUtils.isCacheSafe(type, getBeanClassLoader())) {
+			//缓存
 			cache.put(type, resolvedBeanNames);
 		}
 		return resolvedBeanNames;
 	}
 
+	/**
+	 * 查找---耗费一定的性能
+	 * @param type
+	 * @param includeNonSingletons
+	 * @param allowEagerInit
+	 * @return
+	 */
 	private String[] doGetBeanNamesForType(ResolvableType type, boolean includeNonSingletons, boolean allowEagerInit) {
 		List<String> result = new ArrayList<>();
 
@@ -515,6 +536,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			// Only consider bean as eligible if the bean name is not defined as alias for some other bean.
 			if (!isAlias(beanName)) {
 				try {
+					//先合并 在put到mergedBeanDefinitions--map当中 然后返回
 					RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
 					// Only check bean definition if it is complete.
 					if (!mbd.isAbstract() && (allowEagerInit ||
@@ -836,6 +858,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	public void clearMetadataCache() {
 		super.clearMetadataCache();
 		this.mergedBeanDefinitionHolders.clear();
+		//为什么要清除这些缓存的依赖项
 		clearByTypeCache();
 	}
 
@@ -872,6 +895,9 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 		// Trigger initialization of all non-lazy singleton beans...
 		for (String beanName : beanNames) {
+
+			//在自己写的bfpp当中冻结了之后再去修改了 bd的属性
+			//所以这里获取的是老的，不是最新的，表示你修改的bd不会生效
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 				if (isFactoryBean(beanName)) {
@@ -939,11 +965,18 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 		}
 
+		//在注册bd的时候判断该名字有没有被注册
 		BeanDefinition existingDefinition = this.beanDefinitionMap.get(beanName);
+		//该名字以及被注册
+		//spring 默认支持覆盖bd 但是spring会输出一些日志
+		//1、两个bd相同的情况下
+		//2、两个bd不相同的情况 role不同  相同也会做优先级的debug
+		//3、两个bd不相同但是role相同
 		if (existingDefinition != null) {
 			if (!isAllowBeanDefinitionOverriding()) {
 				throw new BeanDefinitionOverrideException(beanName, beanDefinition, existingDefinition);
 			}
+			//优先级
 			else if (existingDefinition.getRole() < beanDefinition.getRole()) {
 				// e.g. was ROLE_APPLICATION, now overriding with ROLE_SUPPORT or ROLE_INFRASTRUCTURE
 				if (logger.isInfoEnabled()) {
@@ -969,6 +1002,9 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			this.beanDefinitionMap.put(beanName, beanDefinition);
 		}
 		else {
+			//我们的spring容器是否开始实例化bean了
+			//alreadyCreated set  是否有值
+			//如果为null  set 没值 没有开始创建bean 不会进if
 			if (hasBeanCreationStarted()) {
 				// Cannot modify startup-time collection elements anymore (for stable iteration)
 				synchronized (this.beanDefinitionMap) {
@@ -977,13 +1013,18 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					updatedDefinitions.addAll(this.beanDefinitionNames);
 					updatedDefinitions.add(beanName);
 					this.beanDefinitionNames = updatedDefinitions;
+
+					//如果你注册beandefinition的名字和和手工注册的bean的名字集合当中某个相同则删除手工注册的
 					removeManualSingletonName(beanName);
 				}
 			}
+			//表示bean以及开始创建了
 			else {
 				// Still in startup registration phase
 				this.beanDefinitionMap.put(beanName, beanDefinition);
 				this.beanDefinitionNames.add(beanName);
+
+
 				removeManualSingletonName(beanName);
 			}
 			this.frozenBeanDefinitionNames = null;
@@ -991,11 +1032,20 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 //		if (beanName.equals("t")){
 //			this.freezeConfiguration();
 //		}
+		//判断注册的bd以及存在--判断的是名字
 		if (existingDefinition != null || containsSingleton(beanName)) {
+			//清除 allBeanNamesByType
+			//把单例池单例池当中的bean也remove
 			resetBeanDefinition(beanName);
 		}
 
+		//如果被冻结了，则表示可能由缓存  则需要清除缓存
+		//这 else if 什么情况下会进呢？
+		//代码角度考虑就是注册了一个细心的不存在的bd 而且容器以及被冻结
+		//多线程的时候
 		else if (isConfigurationFrozen()) {
+			//清除缓存
+			//因为你缓存bd有可能以及不存在了
 			clearByTypeCache();
 		}
 	}
@@ -1078,8 +1128,11 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 	@Override
 	public void registerSingleton(String beanName, Object singletonObject) throws IllegalStateException {
+		//存到单例池当中
 		super.registerSingleton(beanName, singletonObject);
+		//add到ManualSingletonNames
 		updateManualSingletonNames(set -> set.add(beanName), set -> !this.beanDefinitionMap.containsKey(beanName));
+		//清除缓存，因为有新的bean注册了
 		clearByTypeCache();
 	}
 
@@ -1094,6 +1147,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	public void destroySingleton(String beanName) {
 		super.destroySingleton(beanName);
 		removeManualSingletonName(beanName);
+		//清除缓存
 		clearByTypeCache();
 	}
 
@@ -1159,6 +1213,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			ResolvableType requiredType, @Nullable Object[] args, boolean nonUniqueAsNull) throws BeansException {
 
 		Assert.notNull(requiredType, "Required type must not be null");
+		//
 		String[] candidateNames = getBeanNamesForType(requiredType);
 
 		if (candidateNames.length > 1) {

@@ -5,33 +5,4 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!--	<bean id="b" class="com.shadow.example.Compound.B">-->
-<!--		<property name="c" ref="c"></property>-->
-<!--	</bean>-->
-<!--	<bean id="c" class="com.shadow.example.Compound.C">-->
-<!--		<property name="d" ref="d"></property>-->
-<!--	</bean>-->
-<!--	<bean id="d" class="com.shadow.example.Compound.D">-->
-<!--	</bean>-->
-
-<!--	<bean id="a" class="com.shadow.example.Compound.A">-->
-<!--		<property name="b" ref="b"></property>-->
-<!--		<property name="b.c.d.age" value="123"></property>-->
-<!--	</bean>-->
-
-
-<!--		<bean id="b" class="com.shadow.example.Compound.B">-->
-<!--			<property name="c" ref="c"></property>-->
-<!--		</bean>-->
-
-<!--	<bean id="indexDao" class="com.shadow.test.CustomFactoryBean">-->
-<!--		<property name="mapperInterface" value="com.shadow.dao.IndexDao"></property>-->
-<!--	</bean>-->
-
-<!--	<bean id="indexDao1" class="com.shadow.test.CustomFactoryBean">-->
-<!--		<property name="mapperInterface" value="com.shadow.dao.IndexDao1"></property>-->
-<!--	</bean>-->
-
-<!--	<bean id="testService" ></bean>-->
-
 </beans>

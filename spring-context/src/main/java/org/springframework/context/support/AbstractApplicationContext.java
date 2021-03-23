@@ -517,6 +517,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
+			//准备工作 比如对系统变量的校验等等
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
@@ -530,11 +531,31 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
+				/**
+				 * 1、执行完程序需要提供的bfpp之后会调用clearMetadataCache
+				 * 就是会根据是否冻结去标识接下来获取bd的时候是否要重新merged
+				 * 就是接下来所有的获取bd操作是否需要拿最新的
+				 * 如果没有冻结那么则会去重写合并
+				 * 7此获取bd 只有第一次和合并
+				 * 为什么只有第一次和合并 后面都不会合并
+				 * 而我们自己提供的bfpp修改了bd 这个时候还没有起到作用
+				 */
 				invokeBeanFactoryPostProcessors(beanFactory);
 
+
+				/**
+				 * 没有冻结情况下写的注释
+				 * 这个方法里面会获取bd
+				 * 由于前面已经设置了需要拿最新的，所以这里就能把bd合并
+				 */
 				// Register bean processors that intercept bean creation.
 				registerBeanPostProcessors(beanFactory);
 
+				/**
+				 * 由于registerBeanPostProcessors当中
+				 * 获取过bd，所以他一定会合并，故而你通过
+				 * bfpp修改过的bd生效了
+				 */
 				// Initialize message source for this context.
 				initMessageSource();
 
@@ -547,6 +568,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// Check for listener beans and register them.
 				registerListeners();
 
+				//实例化所有非原型的bean non-lazy
 				// Instantiate all remaining (non-lazy-init) singletons.
 				finishBeanFactoryInitialization(beanFactory);
 
@@ -602,6 +624,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 		// Validate that all properties marked as required are resolvable:
 		// see ConfigurablePropertyResolver#setRequiredProperties
+		//校验系统属性的
 		getEnvironment().validateRequiredProperties();
 
 		// Store pre-refresh ApplicationListeners...
@@ -625,6 +648,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see org.springframework.web.context.support.WebApplicationContextUtils#initServletPropertySources
 	 */
 	protected void initPropertySources() {
+
 		// For subclasses: do nothing by default.
 	}
 
@@ -647,11 +671,17 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 		// Tell the internal bean factory to use the context's class loader etc.
 		beanFactory.setBeanClassLoader(getClassLoader());
+		//解析el表达式的组建
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+
+		//先说程序员自己新建的类
+		//比如你建了一个类X  这个X类实现了 ApplicationContextAware
+		// （自动注入）那么X 当中注入的ApplicationContext 则无效
+		//
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 		beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);
 		beanFactory.ignoreDependencyInterface(ResourceLoaderAware.class);
@@ -661,6 +691,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 		// BeanFactory interface not registered as resolvable type in a plain factory.
 		// MessageSource registered (and found for autowiring) as a bean.
+		//BeanFactory.class, beanFactory --表示将来注入BeanFactory类型的依赖
+		// 则注入这个DefaultListableBeanFactory类型的实例
 		beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
 		beanFactory.registerResolvableDependency(ResourceLoader.class, this);
 		beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
@@ -798,6 +830,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			DefaultLifecycleProcessor defaultProcessor = new DefaultLifecycleProcessor();
 			defaultProcessor.setBeanFactory(beanFactory);
 			this.lifecycleProcessor = defaultProcessor;
+
 			beanFactory.registerSingleton(LIFECYCLE_PROCESSOR_BEAN_NAME, this.lifecycleProcessor);
 			if (logger.isTraceEnabled()) {
 				logger.trace("No '" + LIFECYCLE_PROCESSOR_BEAN_NAME + "' bean, using " +
@@ -873,6 +906,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.setTempClassLoader(null);
 
 		// Allow for caching all bean definition metadata, not expecting further changes.
+		//冻结所有的beanDefintion
 		beanFactory.freezeConfiguration();
 
 		// Instantiate all remaining (non-lazy-init) singletons.

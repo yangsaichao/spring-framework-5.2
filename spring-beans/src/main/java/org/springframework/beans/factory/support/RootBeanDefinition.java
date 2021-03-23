@@ -238,7 +238,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 
 	/**
 	 * Create a new RootBeanDefinition as deep copy of the given
-	 * bean definition.
+	 * bean definition. original 原始的bd bdmap当中获取出来的bd
 	 * @param original the original bean definition to copy from
 	 */
 	public RootBeanDefinition(RootBeanDefinition original) {
@@ -470,7 +470,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 		}
 	}
 
-
+	//this 表示的原始的那个bd---bdmap当中获取出来的bd
 	@Override
 	public RootBeanDefinition cloneBeanDefinition() {
 		return new RootBeanDefinition(this);

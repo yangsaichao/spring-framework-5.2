@@ -1,6 +1,5 @@
-package com.spring.config;
+package com.spring.extension.beanFactoryPostProcessor.config;
 
-import com.shadow.test.CustomScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/3/162:21
  */
 @Configuration
-@ComponentScan("com.spring")
+@ComponentScan("com.spring.extension.beanFactoryPostProcessor")
 public class Config {
 }

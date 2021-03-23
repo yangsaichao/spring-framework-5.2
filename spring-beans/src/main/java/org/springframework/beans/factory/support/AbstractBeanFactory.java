@@ -291,6 +291,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 
 			if (!typeCheckOnly) {
+				//往alreadyCreated 集合当中添加name 表示该bean开始创建了
+				//直接清除了mergedmap 表示下面开始获取的bd都是最新的
 				markBeanAsCreated(beanName);
 			}
 
@@ -319,6 +321,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 				// Create bean instance.
 				if (mbd.isSingleton()) {
+					//getSingleton 除了调用createBean创建beans之外
 					sharedInstance = getSingleton(beanName, () -> {
 						try {
 							return createBean(beanName, mbd, args);
@@ -334,11 +337,13 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 					bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
 				}
 
+				//这个不是原型bean的创建的所有流程 只是一个特殊的原型bena的创建流程
 				else if (mbd.isPrototype()) {
 					// It's a prototype -> create a new instance.
 					Object prototypeInstance = null;
 					try {
 						beforePrototypeCreation(beanName);
+						//createBean 仅仅创建bean
 						prototypeInstance = createBean(beanName, mbd, args);
 					}
 					finally {
@@ -1282,6 +1287,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throws BeansException {
 		// Quick check on the concurrent map first, with minimal locking.
 		RootBeanDefinition mbd = this.mergedBeanDefinitions.get(beanName);
+		//如果stale为true 则不会进if，会去合并
 		if (mbd != null && !mbd.stale) {
 			return mbd;
 		}
@@ -1312,6 +1318,15 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * @return a (potentially merged) RootBeanDefinition for the given bean
 	 * @throws BeanDefinitionStoreException in case of an invalid bean definition
 	 */
+
+	/**
+	 *
+	 * @param beanName
+	 * @param bd   从beanDefinitonMap当中拿出来的原始的bd（子类）
+	 * @param containingBd
+	 * @return
+	 * @throws BeanDefinitionStoreException
+	 */
 	protected RootBeanDefinition getMergedBeanDefinition(
 			String beanName, BeanDefinition bd, @Nullable BeanDefinition containingBd)
 			throws BeanDefinitionStoreException {
@@ -1327,6 +1342,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 			if (mbd == null || mbd.stale) {
 				previous = mbd;
+				//表示是一个普通类，或者父类
 				if (bd.getParentName() == null) {
 					// Use copy of given root bean definition.
 					if (bd instanceof RootBeanDefinition) {
@@ -1338,6 +1354,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				}
 				else {
 					// Child bean definition: needs to be merged with parent.
+					//定义一个bd来接受父bd
 					BeanDefinition pbd;
 					try {
 						String parentBeanName = transformedBeanName(bd.getParentName());
@@ -1445,7 +1462,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 */
 	public void clearMetadataCache() {
 		this.mergedBeanDefinitions.forEach((beanName, bd) -> {
+			//如果被冻结则不会进if  表示不会重写merged
 			if (!isBeanEligibleForMetadataCaching(beanName)) {
+				//标识在接下来的获取bd的时候是否需要merged
 				bd.stale = true;
 			}
 		});
