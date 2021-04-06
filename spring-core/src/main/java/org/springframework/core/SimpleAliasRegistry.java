@@ -45,6 +45,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	/** Logger available to subclasses. */
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	//需要注意的是该map的key为别名，value为真实名字
 	/** Map from alias to canonical name. */
 	private final Map<String, String> aliasMap = new ConcurrentHashMap<>(16);
 
@@ -54,6 +55,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 		Assert.hasText(name, "'name' must not be empty");
 		Assert.hasText(alias, "'alias' must not be empty");
 		synchronized (this.aliasMap) {
+			//判断bean的名字是否和别名一样
 			if (alias.equals(name)) {
 				this.aliasMap.remove(alias);
 				if (logger.isDebugEnabled()) {
@@ -67,6 +69,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 						// An existing alias - no need to re-register
 						return;
 					}
+					//判断别名是否能够被覆盖
 					if (!allowAliasOverriding()) {
 						throw new IllegalStateException("Cannot define alias '" + alias + "' for name '" +
 								name + "': It is already registered for name '" + registeredName + "'.");
@@ -76,7 +79,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 								registeredName + "' with new target name '" + name + "'");
 					}
 				}
+				//判断别名是否被注册过了
 				checkForAliasCircle(name, alias);
+				//别名的底层就算一个map，key为别名，value为bean的名字
 				this.aliasMap.put(alias, name);
 				if (logger.isTraceEnabled()) {
 					logger.trace("Alias definition '" + alias + "' registered for name '" + name + "'");
@@ -86,6 +91,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	}
 
 	/**
+	 * 别名是否能够被覆盖
 	 * Determine whether alias overriding is allowed.
 	 * <p>Default is {@code true}.
 	 */
@@ -117,6 +123,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 
 	@Override
 	public boolean isAlias(String name) {
+		//从存放别名的map当中获取一个值，看是否name为别名
 		return this.aliasMap.containsKey(name);
 	}
 
@@ -202,6 +209,8 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	}
 
 	/**
+	 *
+	 * 如果传入的是别名则返回一个bean的名字
 	 * Determine the raw name, resolving aliases to canonical names.
 	 * @param name the user-specified name
 	 * @return the transformed name

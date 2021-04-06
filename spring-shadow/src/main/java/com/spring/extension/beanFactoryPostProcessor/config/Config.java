@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/3/162:21
  */
 @Configuration
-@ComponentScan("com.spring.extension.beanFactoryPostProcessor")
+@ComponentScan(value = "com.spring.extension.beanFactoryPostProcessor")
 public class Config {
 }

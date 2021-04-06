@@ -5,4 +5,9 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<bean id="a1" class="com.spring.AnnotatedBeanDefinitionReader.bean.A1" factory-method="xxx"></bean>
+
+	<bean id="c1"
+		  factory-bean="a1"
+		  factory-method="getInstance"></bean>
 </beans>

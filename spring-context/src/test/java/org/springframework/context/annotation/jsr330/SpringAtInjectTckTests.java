@@ -31,6 +31,7 @@ import org.atinject.tck.auto.accessories.SpareTire;
 
 import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
 import org.springframework.context.annotation.Jsr330ScopeMetadataResolver;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.GenericApplicationContext;
 

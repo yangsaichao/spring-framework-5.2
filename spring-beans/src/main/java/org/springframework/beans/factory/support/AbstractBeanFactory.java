@@ -521,26 +521,55 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected boolean isTypeMatch(String name, ResolvableType typeToMatch, boolean allowFactoryBeanInit)
 			throws NoSuchBeanDefinitionException {
 
+		//这个方法做了两个事情
+		/**
+		 * 1、判断名字是否fb类型的名字即是否以&开头
+		 *    如果不是则返回              比如传入一个 a  不是&开头则直接返回 a
+		 *    如果是 则把&去掉返回         比如传入一个 &a 是&开头去掉& 返回a
+		 * 可能有人会认为这个代码有病，因为最后反正返回a，为什么还要处理呢？
+		 * 其实主要为了做第二件事；
+		 *
+		 * 当昨做完第一件事之后，拿到返回结果spring会去判断这个结果是否是bean的别名
+		 * 如果是别名则返回她的正常名字；所以spring要去掉& 因为对于一个fb本身来说是没有别名的
+		 * 也就是在别名的map当中不可能存在value为&开头的内容
+		 *
+		 *
+		 *  需要注意的这里的name = 传过来的名字；可能是别名，也可能是带& 也可能是真名
+		 *  而beanName已经处理过了，所以永远只能是 真名
+		 */
 		String beanName = transformedBeanName(name);
-		boolean isFactoryDereference = BeanFactoryUtils.isFactoryDereference(name);
 
+		//拿到name去判断这个名字是否是一个factoryBean的名字
+		boolean isFactoryDereference = BeanFactoryUtils.isFactoryDereference(name);
+		/**
+		 * 这里比较重要，spring通过类型去获取所有该类型的名字首先是通过名字去单例池直接获取
+		 * 如果能够获取到一个bean，再拿这个bean和类型去匹配
+		 * 匹配上则返回true
+		 */
 		// Check manually registered singletons.
 		Object beanInstance = getSingleton(beanName, false);
 		if (beanInstance != null && beanInstance.getClass() != NullBean.class) {
 			if (beanInstance instanceof FactoryBean) {
 				if (!isFactoryDereference) {
+					//这里直接调用 getObjectType 的到这个fb返回的类型
 					Class<?> type = getTypeForFactoryBean((FactoryBean<?>) beanInstance);
+					//匹配传入的类型
 					return (type != null && typeToMatch.isAssignableFrom(type));
 				}
 				else {
+					//如果你传入的名字是一个带&的直接匹配自己
 					return typeToMatch.isInstance(beanInstance);
 				}
 			}
+			//判断bean是一个正常的bean，而且传入的名字是一个正常的名字
 			else if (!isFactoryDereference) {
+				//如果传入的类型和拿出来的bean的类型相同则直接返回--这也是最常见的匹配
 				if (typeToMatch.isInstance(beanInstance)) {
 					// Direct match for exposed instance?
 					return true;
 				}
+				//containsBeanDefinition = beanDefinitionMap.containsKey
+				//判断传入的类当中是否还有泛型
 				else if (typeToMatch.hasGenerics() && containsBeanDefinition(beanName)) {
 					// Generics potentially only match on the target class, not on the proxy...
 					RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
@@ -564,10 +593,17 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 			return false;
 		}
+		//containsSingleton=singletonObjects.containsKey(beanName)
+		//bean 也不等于null 但是类型匹配补上则返回false 表示改名字所对应的bean没有陪到到这个类型containsSingleton
 		else if (containsSingleton(beanName) && !containsBeanDefinition(beanName)) {
 			// null instance registered
 			return false;
 		}
+
+
+		//如果单例池里面拿不到，spring会继续判断，因为这个匹配类型的调用时机不一定是再bean都实例化之后
+		//如果再bean实例化之前调用则 肯定不在单例池当中，所以spring还要处理这种情况
+		//故而如果单例池匹配不到，还需要从mergedBeanDefinition当中去获取信息匹配
 
 		// No singleton instance found -> check bean definition.
 		BeanFactory parentBeanFactory = getParentBeanFactory();
@@ -723,6 +759,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		}
 	}
 
+	//根据bean的名字获取他所有的别名
 	@Override
 	public String[] getAliases(String name) {
 		String beanName = transformedBeanName(name);

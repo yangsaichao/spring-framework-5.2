@@ -107,6 +107,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	 * Create a new GenericApplicationContext.
 	 * @see #registerBeanDefinition
 	 * @see #refresh
+	 * 实例化了一个 DefaultListableBeanFactory对象
 	 */
 	public GenericApplicationContext() {
 		this.beanFactory = new DefaultListableBeanFactory();
@@ -338,6 +339,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 		return this.beanFactory.isBeanNameInUse(beanName);
 	}
 
+	//给指定的bean注册一个别名
 	@Override
 	public void registerAlias(String beanName, String alias) {
 		this.beanFactory.registerAlias(beanName, alias);

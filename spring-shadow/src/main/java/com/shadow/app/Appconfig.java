@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("com.shadow")
-@CustomScan
+@MapperScan
 //@MapperScan("com.shadow.dao")
 public class Appconfig {
 

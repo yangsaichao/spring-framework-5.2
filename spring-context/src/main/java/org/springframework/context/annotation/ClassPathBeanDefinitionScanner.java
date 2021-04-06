@@ -82,6 +82,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 	 * of a {@code BeanDefinitionRegistry}
 	 */
 	public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
+
 		this(registry, true);
 	}
 
@@ -163,7 +164,13 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 		this.registry = registry;
 
 		if (useDefaultFilters) {
-			//注册默认的扫描过滤器
+			//注册默认的扫描器过滤规则
+			//过滤规则由两种过滤器器来实现的
+			//仅仅对 include进行了注册
+			//并且注册了三种 incluide的规则
+			//1、类上面是否加了Component注解
+			//2、类上面是否加了ManagedBean 注解
+			//3、类上面是否加了Named 注解
 			registerDefaultFilters();
 		}
 		setEnvironment(environment);
@@ -251,8 +258,9 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 	 * @return number of beans registered
 	 */
 	public int scan(String... basePackages) {
+		//获取现在已经存在的bd
 		int beanCountAtScanStart = this.registry.getBeanDefinitionCount();
-
+		//mybatis扩展spring的时候
 		doScan(basePackages);
 
 		// Register annotation config processors, if necessary.
@@ -274,8 +282,13 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 	protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
 		Assert.notEmpty(basePackages, "At least one base package must be specified");
 		Set<BeanDefinitionHolder> beanDefinitions = new LinkedHashSet<>();
+
 		for (String basePackage : basePackages) {
+			//晚上了扫描  class文件----有选择性bd
 			Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
+
+
+
 			for (BeanDefinition candidate : candidates) {
 				ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(candidate);
 				candidate.setScope(scopeMetadata.getScopeName());

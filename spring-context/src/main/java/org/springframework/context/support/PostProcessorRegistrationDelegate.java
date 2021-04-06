@@ -82,11 +82,20 @@ final class PostProcessorRegistrationDelegate {
 			// PriorityOrdered, Ordered, and the rest.
 			List<BeanDefinitionRegistryPostProcessor> currentRegistryProcessors = new ArrayList<>();
 
-			// First, invoke the BeanDefinitionRegistryPostProcessors that implement PriorityOrdered.
+			/**
+			 *需要执行BeanDefinitionRegistryPostProcessor 首先得实例化
+			 *实例化之前首先spring得知道整个容器当中有哪些BeanDefinitionRegistryPostProcessor
+			 * 容器里面有几个BeanDefinitionRegistryPostProcessor
+			 *  执行内部的BeanDefinitionRegistryPostProcessor
+			 *  ConfigrationClassPostPorcessor#postProcessBeanDefinitionRegistry  扫描
+			 *  实例化这个类
+			 */
+			// First, invoke the BeanDefinitionRegistryPostProcessors .
 			String[] postProcessorNames =
 					beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
 			for (String ppName : postProcessorNames) {
 				if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {
+					//有则取，无则实例化然后put到单例池 然后在返回
 					currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
 					processedBeans.add(ppName);
 				}
@@ -98,6 +107,7 @@ final class PostProcessorRegistrationDelegate {
 			currentRegistryProcessors.clear();
 
 			// Next, invoke the BeanDefinitionRegistryPostProcessors that implement Ordered.
+			// getBeanNamesForType  -----bean的名字
 			postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
 			for (String ppName : postProcessorNames) {
 				if (!processedBeans.contains(ppName) && beanFactory.isTypeMatch(ppName, Ordered.class)) {

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
  * @date 2021/3/2220:45
  */
 
-@Component
 public class Y {
 
 }

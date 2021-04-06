@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 
 //@Configuration
-//@MapperScan("com.shadow.dao")
+@MapperScan("com.shadow.dao")
 public class BatisConfig {
 
 	@Bean

@@ -72,7 +72,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 
 	private static final String COMPONENT_ANNOTATION_CLASSNAME = "org.springframework.stereotype.Component";
 
-	private final Map<String, Set<String>> metaAnnotationTypesCache = new ConcurrentHashMap<>();
+	private final Map<String, Set<String>>  metaAnnotationTypesCache = new ConcurrentHashMap<>();
 
 
 	@Override

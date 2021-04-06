@@ -129,13 +129,36 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * @see ClassPathBeanDefinitionScanner#setBeanNameGenerator
 	 * @see AnnotationBeanNameGenerator
 	 * @see FullyQualifiedAnnotationBeanNameGenerator
+	 *
+	 * 仅仅是给reader渲染器一个策略
+	 * 和spring内置的那个扫描器一个策略
+	 * 但是spring在完成对配置的扫描时候用到的扫描器没有生效
 	 */
 	public void setBeanNameGenerator(BeanNameGenerator beanNameGenerator) {
+		//给reader一个自定义的策略器
 		this.reader.setBeanNameGenerator(beanNameGenerator);
+		//给扫描仪的一个自定义的策略器
 		this.scanner.setBeanNameGenerator(beanNameGenerator);
+
+
+		//注册一个beanName生成器到单例池，方便spring内部自己扫描出来bean后使用
 		getBeanFactory().registerSingleton(
 				AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR, beanNameGenerator);
 	}
+
+
+	public void customScannerAndReaderByBeanNameGenerator(BeanNameGenerator readerBeanNameGenerator,BeanNameGenerator scanBeanNameGenerator){
+		//如果为null则使用spring默认的
+		if(readerBeanNameGenerator!=null){
+			this.reader.setBeanNameGenerator(readerBeanNameGenerator);
+		}
+
+		this.scanner.setBeanNameGenerator(scanBeanNameGenerator);
+
+	}
+
+
+
 
 	/**
 	 * Set the {@link ScopeMetadataResolver} to use for registered component classes.
@@ -161,6 +184,10 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * {@link Configuration @Configuration} classes
 	 * @see #scan(String...)
 	 * @see #refresh()
+	 *
+	 * 是用来注册配置类的-----不精准
+	 *
+	 * 提供以个类个spring容器，然后spring容器会把这个类实例化bean
 	 */
 	@Override
 	public void register(Class<?>... componentClasses) {
@@ -181,6 +208,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		Assert.notEmpty(basePackages, "At least one base package must be specified");
 		this.scanner.scan(basePackages);
 	}
+
 
 
 	//---------------------------------------------------------------------

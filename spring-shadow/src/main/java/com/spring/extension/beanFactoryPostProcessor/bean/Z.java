@@ -18,15 +18,19 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j(topic = "e")
 @Component
-public class Z implements ApplicationContextAware {
+public class Z implements ApplicationContextAware{
 
 
 	ApplicationContext applicationContext;
 
-//	@Autowired
-//	BeanFactory beanFactory;
+	/**
+	 * 他会在Z这个bean的生命周期某一步骤被调用
+	 * setApplicationContext 是spring在特定时机调用的
+	 * 没有实现接口的情况下，他的调用时机是在填充属性的时候
+	 * @param applicationContext the ApplicationContext object to be used by this object
+	 * @throws BeansException
+	 */
 
-	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 			this.applicationContext=applicationContext;
 			log.debug("applicationContext-name:{}",applicationContext.getClass().getSimpleName());

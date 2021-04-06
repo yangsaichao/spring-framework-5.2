@@ -1,12 +1,18 @@
 package com.spring.extension.beanFactoryPostProcessor.test;
 
 import com.spring.extension.beanFactoryPostProcessor.TestFrozen;
+import com.spring.extension.beanFactoryPostProcessor.TestIgnoreDependencyInterface;
+import com.spring.extension.beanFactoryPostProcessor.TestIgnoreDependencyType;
 import com.spring.extension.beanFactoryPostProcessor.bean.*;
 import com.spring.extension.beanFactoryPostProcessor.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author 钢牌讲师-子路
@@ -16,15 +22,16 @@ import org.springframework.stereotype.Component;
 public class TestBeanFactoryPostProcessor {
 
 	public static void main(String[] args) {
-		//spring容器默认情况下允许替换bd---通过名字
+
 		AnnotationConfigApplicationContext applicationContext =
 				new AnnotationConfigApplicationContext();
-		Class[] clazz = new Class[]{E.class, TestFrozen.class};
+		//
+		Class[] clazz = new Class[]{A.class,B.class,TestIgnoreDependencyType.class};
 		applicationContext.register(clazz);
-
 		applicationContext.refresh();
-		System.out.println(applicationContext.getBean(E.class));
+		applicationContext.getBean(A.class).printInfo();
 
 
 	}
+
 }

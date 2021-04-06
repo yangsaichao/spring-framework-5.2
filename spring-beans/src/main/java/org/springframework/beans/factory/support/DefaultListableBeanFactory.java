@@ -530,9 +530,20 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	 */
 	private String[] doGetBeanNamesForType(ResolvableType type, boolean includeNonSingletons, boolean allowEagerInit) {
 		List<String> result = new ArrayList<>();
-
+		//给定一个类型返回改类型所有对应的bean的名字
+		//注意这里不是返回一个bean的所有名字和别名有区别
+		//这个地方是翻一个类型所对应的所有的bean的名字
+		//比如给定一个接口，可能这个接口有三个实现都被注册给了spring容器
+		//那么这里传入这个接口会返回三个名字(可以看到该方法的返回类型就是一个接口)
+		//站在spring的角度这个返回的名字一定存在容器当中，所以这里会先变量beanDefinitionNames
+		//当然有的人可能会问，我们直接调用registerSingleton方式注册bean她的名字就不知道beanDefinitionNames
+		//是否意味着直接注册bean无法调用该方法获取正确的名字？
+		//当然不是，这个for-beanDefinitionNames 后面紧跟着一个 for-manualSingletonNames
+		//对于manualSingletonNames 我们前面讲过也可以参考我写的总结文档
 		// Check all bean definitions.
 		for (String beanName : this.beanDefinitionNames) {
+			//判断这个名字是否十个别名，当然这种情况基本不会发生
+			//注意是判断这个名字是否是别的bean的别名
 			// Only consider bean as eligible if the bean name is not defined as alias for some other bean.
 			if (!isAlias(beanName)) {
 				try {
@@ -542,13 +553,19 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					if (!mbd.isAbstract() && (allowEagerInit ||
 							(mbd.hasBeanClass() || !mbd.isLazyInit() || isAllowEagerClassLoading()) &&
 									!requiresEagerInitForType(mbd.getFactoryBeanName()))) {
+						//通过beanDefinition来判断这个bean是否fb类型
 						boolean isFactoryBean = isFactoryBean(beanName, mbd);
 						BeanDefinitionHolder dbd = mbd.getDecoratedDefinition();
 						boolean matchFound = false;
+						//如果是fb，判断FB是否可以立即初始化
 						boolean allowFactoryBeanInit = (allowEagerInit || containsSingleton(beanName));
+						//判断是否lazy
 						boolean isNonLazyDecorated = (dbd != null && !mbd.isLazyInit());
+						//如果是正常类---非FB
 						if (!isFactoryBean) {
+							//是否只针对单例进行匹配
 							if (includeNonSingletons || isSingleton(beanName, mbd, dbd)) {
+								//如果传入的名字和类型能够匹配的上则返回true
 								matchFound = isTypeMatch(beanName, type, allowFactoryBeanInit);
 							}
 						}

@@ -203,9 +203,11 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 */
 	@SuppressWarnings("unchecked")
 	protected void registerDefaultFilters() {
+		//这里直接用的是Component.class
 		this.includeFilters.add(new AnnotationTypeFilter(Component.class));
 		ClassLoader cl = ClassPathScanningCandidateComponentProvider.class.getClassLoader();
 		try {
+			//为什么不直接写成ManagedBean.class？编译通过
 			this.includeFilters.add(new AnnotationTypeFilter(
 					((Class<? extends Annotation>) ClassUtils.forName("javax.annotation.ManagedBean", cl)), false));
 			logger.trace("JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning");
@@ -308,9 +310,12 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 * @return a corresponding Set of autodetected bean definitions
 	 */
 	public Set<BeanDefinition> findCandidateComponents(String basePackage) {
+
+		//提高扫描效率
 		if (this.componentsIndex != null && indexSupportsIncludeFilters()) {
 			return addCandidateComponentsFromIndex(this.componentsIndex, basePackage);
 		}
+
 		else {
 			return scanCandidateComponents(basePackage);
 		}
@@ -415,9 +420,13 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	private Set<BeanDefinition> scanCandidateComponents(String basePackage) {
 		Set<BeanDefinition> candidates = new LinkedHashSet<>();
 		try {
+			//把包名转换成为一个路径
 			String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
 					resolveBasePackage(basePackage) + '/' + this.resourcePattern;
+			//得到下面所以的文件  resources ==file
 			Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
+			Class clazz =null;
+
 			boolean traceEnabled = logger.isTraceEnabled();
 			boolean debugEnabled = logger.isDebugEnabled();
 			for (Resource resource : resources) {
@@ -426,10 +435,22 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				}
 				if (resource.isReadable()) {
 					try {
+						//asm来解析类---MetadataReader 对元数据的一种抽象
+						// getMetadataReaderFactory()--->MetadataReaderFactory -SimpleMetadataReaderFactory
+						//为什么这里不直接变成class  MetadataReader ==class
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
+						//判断这个类是否符合要求  扫描器有自己的规则
+						//1、是否被剔除  扫描器没有添加 excludeFilters 所以这里不会剔除
+						//2、是否现需要转换 扫描器添加includeFilters  3个规则
+
+						//在mybatis扩展spring的情况由于添加不对任何规则做过滤过滤器
+						//所以这个if永远返回true  所有类都能所谓mapper
 						if (isCandidateComponent(metadataReader)) {
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setSource(resource);
+							//默认spring的情况下 bd实例化好之后 spring还会进行特殊类的判断
+							//在mybatis扩展spring的情况 会调用子类 重写了这个方法
+							//mybatis获取bd然后判断bdclass的类型是否为接口
 							if (isCandidateComponent(sbd)) {
 								if (debugEnabled) {
 									logger.debug("Identified candidate component class: " + resource);
@@ -523,8 +544,13 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 */
 	protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
 		AnnotationMetadata metadata = beanDefinition.getMetadata();
-		return (metadata.isIndependent() && (metadata.isConcrete() ||
-				(metadata.isAbstract() && metadata.hasAnnotatedMethods(Lookup.class.getName()))));
+		return (metadata.isIndependent() &&
+				(metadata.isConcrete() ||
+					(
+							metadata.isAbstract() && metadata.hasAnnotatedMethods(Lookup.class.getName())
+					)
+				)
+		);
 	}
 
 

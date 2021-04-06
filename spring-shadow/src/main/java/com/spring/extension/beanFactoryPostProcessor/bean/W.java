@@ -15,6 +15,11 @@ public class W implements X{
 
 	Y y;
 
+	/**
+	 * 需要自动注入Y 而提供的方法
+	 * 因为w实现了Y 而重写的方法
+	 * @param y
+	 */
 	@Override
 	public void setY(Y y) {
 		this.y = y;
@@ -23,6 +28,5 @@ public class W implements X{
 	public void printInfo(){
 		log.debug("bean y:{}",y);
 	}
-
 
 }

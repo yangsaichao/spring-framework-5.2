@@ -349,7 +349,7 @@ class AnnotationConfigApplicationContextTests {
 		bd.setLazyInit(true);
 		context.registerBeanDefinition("fb", bd);
 		context.refresh();
-
+		//Object fb = context.getBean("fb");
 		assertThat(context.getType("fb")).isEqualTo(String.class);
 		assertThat(context.getType("&fb")).isEqualTo(FactoryBean.class);
 		assertThat(context.getBeanNamesForType(FactoryBean.class)).hasSize(1);

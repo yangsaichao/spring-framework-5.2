@@ -102,12 +102,14 @@ public class ResolvableType implements Serializable {
 
 	/**
 	 * Optional provider for the type.
+	 * 类型的提供者
 	 */
 	@Nullable
 	private final TypeProvider typeProvider;
 
 	/**
 	 * The {@code VariableResolver} to use or {@code null} if no resolver is available.
+	 * 泛型参数解析器
 	 */
 	@Nullable
 	private final VariableResolver variableResolver;

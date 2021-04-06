@@ -83,7 +83,9 @@ class MergedAnnotationReadingVisitor<A extends Annotation> extends AnnotationVis
 	@Override
 	@Nullable
 	public AnnotationVisitor visitAnnotation(String name, String descriptor) {
+		System.out.println();
 		return visitAnnotation(descriptor, annotation -> this.attributes.put(name, annotation));
+
 	}
 
 	@Override

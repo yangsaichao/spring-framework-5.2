@@ -50,6 +50,7 @@ public class AnnotatedBeanDefinitionReader {
 
 	private final BeanDefinitionRegistry registry;
 
+	//bean的名字的生成器
 	private BeanNameGenerator beanNameGenerator = AnnotationBeanNameGenerator.INSTANCE;
 
 	private ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
@@ -66,6 +67,12 @@ public class AnnotatedBeanDefinitionReader {
 	 * in the form of a {@code BeanDefinitionRegistry}
 	 * @see #AnnotatedBeanDefinitionReader(BeanDefinitionRegistry, Environment)
 	 * @see #setEnvironment(Environment)
+	 * 读取加了注解的类，然后变成一个BeanDefinition
+	 *
+	 * 渲染器
+	 * 1、BeanDefinitionRegistry --注册一个bd
+	 * 2、beanNameGenerator 能够准确的生成bean的名字 自定义一些名字生成策略
+	 * 3、具备吧一个类变成bd
 	 */
 	public AnnotatedBeanDefinitionReader(BeanDefinitionRegistry registry) {
 		this(registry, getOrCreateEnvironment(registry));
@@ -85,6 +92,8 @@ public class AnnotatedBeanDefinitionReader {
 		Assert.notNull(environment, "Environment must not be null");
 		this.registry = registry;
 		this.conditionEvaluator = new ConditionEvaluator(registry, environment, null);
+
+		//注册注解配置的处理器
 		AnnotationConfigUtils.registerAnnotationConfigProcessors(this.registry);
 	}
 
@@ -250,16 +259,21 @@ public class AnnotatedBeanDefinitionReader {
 			@Nullable Class<? extends Annotation>[] qualifiers, @Nullable Supplier<T> supplier,
 			@Nullable BeanDefinitionCustomizer[] customizers) {
 
+		//
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
-
+		//给beanDefinition设置一个supplier
 		abd.setInstanceSupplier(supplier);
 		//分析作用域的
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
+
 		abd.setScope(scopeMetadata.getScopeName());
+		//----默认情况下beanNameGenerator--AnnotationBeanNameGenerator
+		//applicationContext.setBeanNameGenerator这个方法去修改
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
+
 		//lazy Primary DependsOn Role description
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
 		if (qualifiers != null) {
