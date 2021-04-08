@@ -78,7 +78,7 @@ class ComponentScanAnnotationParser {
 		//getScanner
 		ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(this.registry,
 				componentScan.getBoolean("useDefaultFilters"), this.environment, this.resourceLoader);
-		//如果不在配置类上做nameGenerator的配置的花则 generatorClass = 默认值BeanNameGenerator
+		//如果不在配置类上做nameGenerator的配置的话 则generatorClass = 默认值BeanNameGenerator
 		Class<? extends BeanNameGenerator> generatorClass = componentScan.getClass("nameGenerator");
 		//默认情况下为true,如果为false那么名字策略用的是你在配置类上面配置的
 		boolean useInheritedGenerator = (BeanNameGenerator.class == generatorClass);

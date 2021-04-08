@@ -247,10 +247,13 @@ class ConfigurationClassParser {
 		// Recursively process the configuration class and its superclass hierarchy.
 		SourceClass sourceClass = asSourceClass(configClass, filter);
 		do {
+
 			sourceClass = doProcessConfigurationClass(configClass, sourceClass, filter);
 		}
 		while (sourceClass != null);
 
+		//把自己作为一个普通类放到map当中
+		//方面处理特殊能力
 		this.configurationClasses.put(configClass, configClass);
 	}
 
@@ -262,6 +265,17 @@ class ConfigurationClassParser {
 	 * @param sourceClass a source class
 	 * @return the superclass, or {@code null} if none found or previously processed
 	 */
+
+
+	/**
+	 *  处理ConfigurationClass  丰富ConfigurationClass
+	 *  或者解析ConfigurationClass  初始化ConfigurationClass
+	 * @param configClass
+	 * @param sourceClass
+	 * @param filter
+	 * @return
+	 * @throws IOException
+	 */
 	@Nullable
 	protected final SourceClass doProcessConfigurationClass(
 			ConfigurationClass configClass, SourceClass sourceClass, Predicate<String> filter)
@@ -269,10 +283,14 @@ class ConfigurationClassParser {
 
 		if (configClass.getMetadata().isAnnotated(Component.class.getName())) {
 			// Recursively process any member (nested) classes first
+			//处理内部类
 			processMemberClasses(configClass, sourceClass, filter);
 		}
 
 		// Process any @PropertySource annotations
+		//处理当前配置类上面加了 @PropertySource注解
+		//主要做法就是把 文件转换成为一个PropertySource对象 然后存到 environment对象当中
+		// environment 再最开始已经注册到单例池
 		for (AnnotationAttributes propertySource : AnnotationConfigUtils.attributesForRepeatable(
 				sourceClass.getMetadata(), PropertySources.class,
 				org.springframework.context.annotation.PropertySource.class)) {
@@ -293,9 +311,15 @@ class ConfigurationClassParser {
 			for (AnnotationAttributes componentScan : componentScans) {
 				// The config class is annotated with @ComponentScan -> perform the scan immediately
 				//完成你们所谓的那个扫描
+				//扫描到得正常类（符合spring规则得）都会被添加，先不处理他得特殊能力
+				//比如一个正常类上面得import，或者他得@Bean 或者他得接口等等先不处理
+				//先直接注册
 				Set<BeanDefinitionHolder> scannedBeanDefinitions =
 						this.componentScanParser.parse(componentScan, sourceClass.getMetadata().getClassName());
 				// Check the set of scanned definitions for any further config classes and parse recursively if needed
+				//接下来再对这些正常得类进行解析，比如上面说得他得特殊能力
+				//因为对于spring而言 任何一个正常得类都是一个配置类（半全而言，都需要解析）
+				//注意这里仅仅是解析并不会做处理
 				for (BeanDefinitionHolder holder : scannedBeanDefinitions) {
 					BeanDefinition bdCand = holder.getBeanDefinition().getOriginatingBeanDefinition();
 					if (bdCand == null) {
@@ -307,9 +331,14 @@ class ConfigurationClassParser {
 				}
 			}
 		}
-
+		//当处理完了扫描出来得正常类（注意上面是个递归），再来处理当前入口得配置类
 		// Process any @Import annotations
-		processImports(configClass, sourceClass, getImports(sourceClass), filter, true);
+		//1、import的是一个普通类  processConfigurationClass --> this.configurationClasses.put(configClass, configClass);
+		//把普通类作为一个配置类缓存起来
+		//2、import的是一个 ImportSelect的类，则实例化然后调用方法得到类名
+		//通过类名转换成 SourceClass，以此解析 最终如果是一个普通类，重复步骤1
+		//3、ImportBeanDefinitionRegistrar 先实例化 然后缓存到map当中 configClass.addImportBeanDefinitionRegistrar
+ 		processImports(configClass, sourceClass, getImports(sourceClass), filter, true);
 
 		// Process any @ImportResource annotations
 		AnnotationAttributes importResource =
@@ -333,6 +362,7 @@ class ConfigurationClassParser {
 		processInterfaces(configClass, sourceClass);
 
 		// Process superclass, if any
+		//因为外部是一个do while循环故而如果有父类则会进行死循环
 		if (sourceClass.getMetadata().hasSuperClass()) {
 			String superclass = sourceClass.getMetadata().getSuperClassName();
 			if (superclass != null && !superclass.startsWith("java") &&
@@ -566,9 +596,18 @@ class ConfigurationClassParser {
 			this.importStack.push(configClass);
 			try {
 				for (SourceClass candidate : importCandidates) {
+					/**
+					 * import的一个类有三种类型
+					 * 1、ImportSelector的类型
+					 * 2、ImportBeanDefinitionRegistrar
+					 * 3、普通的类
+					 */
 					if (candidate.isAssignable(ImportSelector.class)) {
+						//如果你Import的是一种ImportSelector类型的类
+						//首先得到类对象 为了实例化
 						// Candidate class is an ImportSelector -> delegate to it to determine imports
 						Class<?> candidateClass = candidate.loadClass();
+						//实例化对象
 						ImportSelector selector = ParserStrategyUtils.instantiateClass(candidateClass, ImportSelector.class,
 								this.environment, this.resourceLoader, this.registry);
 						Predicate<String> selectorFilter = selector.getExclusionFilter();
@@ -598,6 +637,7 @@ class ConfigurationClassParser {
 						// process it as an @Configuration class
 						this.importStack.registerImport(
 								currentSourceClass.getMetadata(), candidate.getMetadata().getClassName());
+						//candidate.asConfigClass(configClass)  importby configClass
 						processConfigurationClass(candidate.asConfigClass(configClass), exclusionFilter);
 					}
 				}

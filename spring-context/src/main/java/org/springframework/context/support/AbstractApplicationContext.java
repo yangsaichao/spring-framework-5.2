@@ -540,6 +540,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				 * 为什么只有第一次和合并 后面都不会合并
 				 * 而我们自己提供的bfpp修改了bd 这个时候还没有起到作用
 				 */
+				//会执行所有实现了 BeanDefinitionRegistryPostProcessor X
+				//会执行所有实现了 BeanFactoryPostProcessor            Y
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 
@@ -738,6 +740,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * <p>Must be called before singleton instantiation.
 	 */
 	protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+		//1、beanFactory -为了获取beanFactory当中得BeanFactoryPostProcessor
+		//2、List<BeanFactoryPostProcessor> beanFactoryPostProcessors 存得是程序员手动通过api往spring容器当中提供得BeanFactoryPostProcessor
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory, getBeanFactoryPostProcessors());
 
 		// Detect a LoadTimeWeaver and prepare for weaving, if found in the meantime

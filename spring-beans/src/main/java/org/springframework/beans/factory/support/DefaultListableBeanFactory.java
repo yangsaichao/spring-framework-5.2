@@ -873,6 +873,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 	@Override
 	public void clearMetadataCache() {
+		//标识mergedmap当中得bd过期了
 		super.clearMetadataCache();
 		this.mergedBeanDefinitionHolders.clear();
 		//为什么要清除这些缓存的依赖项
