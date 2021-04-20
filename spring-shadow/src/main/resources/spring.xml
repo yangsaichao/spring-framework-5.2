@@ -10,4 +10,6 @@
 	<bean id="c1"
 		  factory-bean="a1"
 		  factory-method="getInstance"></bean>
+
+	<bean id="xxx" class="aaa"></bean>
 </beans>

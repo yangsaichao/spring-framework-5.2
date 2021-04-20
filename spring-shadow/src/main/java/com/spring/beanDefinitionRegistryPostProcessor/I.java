@@ -3,8 +3,7 @@ package com.spring.beanDefinitionRegistryPostProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @author 钢牌讲师-子路 qq 244854192
  * @date 2021/4/93:14
  */
-@Component
 @PropertySource("classpath:application.properties")
 @Slf4j(topic = "e")
 public class I {
@@ -22,17 +20,30 @@ public class I {
 	private Environment environment;
 
 	private String face;
+
 	private String salary;
 
-	@Value("${zl.face}")
+
+
+	/**
+	 * 属于自动注入
+	 * 填充属性
+	 * @param face
+	 */
+	@Value("${zl}")
 	public void setFace(String face) {
 		log.debug("face:{}",face);
 		this.face = face;
 	}
 	@Value("${zl.salary}")
 	public void setSalary(String salary) {
-		environment.getProperty("zl");
+		//environment.getProperty("zl");
 		log.debug("salary:{}",salary);
 		this.salary = salary;
+	}
+
+
+	public void aa(){
+		System.out.println(environment.getProperty("zl.face"));
 	}
 }

@@ -45,6 +45,9 @@ import org.springframework.util.ClassUtils;
  * @since 3.0
  * @see BeanMethod
  * @see ConfigurationClassParser
+ *
+ * 抽象配置类
+ * 存储配置信息
  */
 final class ConfigurationClass {
 
@@ -55,13 +58,16 @@ final class ConfigurationClass {
 	@Nullable
 	private String beanName;
 
+	//当前配置类import了哪些类(普通类)
 	private final Set<ConfigurationClass> importedBy = new LinkedHashSet<>(1);
-
+	//当前配置类当中所有的@4bean方法
 	private final Set<BeanMethod> beanMethods = new LinkedHashSet<>();
 
+	//存储@ImportResource
 	private final Map<String, Class<? extends BeanDefinitionReader>> importedResources =
 			new LinkedHashMap<>();
 
+	//处理import当前配置类import了哪些实现了 ImportBeanDefinitionRegistrar
 	private final Map<ImportBeanDefinitionRegistrar, AnnotationMetadata> importBeanDefinitionRegistrars =
 			new LinkedHashMap<>();
 

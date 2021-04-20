@@ -76,7 +76,7 @@ final class PostProcessorRegistrationDelegate {
 			List<BeanDefinitionRegistryPostProcessor> registryProcessors = new ArrayList<>();
 
 			//遍历beanFactoryPostProcessors 方法传进来的一个list集合
-			//spring最先执行得是程序员通过api提供得 context.addBeanFactoryPostProcessor
+			//spring最先执行得是程序员通过api提供得 context.addBeanFactoryPostProcessor(new bfpp)
 			//为什么最先执行他？为什么和扫描得执行时机不一样呢？
 			//一般没有元素
 			for (BeanFactoryPostProcessor postProcessor : beanFactoryPostProcessors) {

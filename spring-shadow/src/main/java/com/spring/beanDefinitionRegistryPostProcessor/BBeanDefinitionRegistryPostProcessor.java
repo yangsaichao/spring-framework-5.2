@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @author 钢牌讲师-子路 qq 244854192
  * @date 2021/4/621:38
  */
-@Component
 @Slf4j(topic = "e")
 public class BBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor{
 	//子类得

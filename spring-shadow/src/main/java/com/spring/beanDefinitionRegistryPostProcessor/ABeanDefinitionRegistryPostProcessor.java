@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
  * @date 2021/4/621:38
  */
 
-@Component
 @Slf4j(topic = "e")
 public class ABeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor{
 	//子类得

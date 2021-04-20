@@ -1,5 +1,6 @@
 package com.spring.beanDefinitionRegistryPostProcessor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -10,7 +11,8 @@ import org.springframework.context.annotation.Bean;
  */
 public interface G {
 	@Bean
-	default H h(){
-		return new H();
+	default F f(){
+		System.out.println("f invoke");
+		return new F();
 	}
 }

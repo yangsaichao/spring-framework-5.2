@@ -650,7 +650,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see org.springframework.web.context.support
 	 */
 	protected void initPropertySources() {
-
 		//getEnvironment().setRequiredProperties("shadow");
 		// For subclasses: do nothing by default.
 	}
