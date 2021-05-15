@@ -16,6 +16,7 @@
 
 package org.springframework.context.annotation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,8 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.ConfigurationCondition.ConfigurationPhase;
 import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.annotation.MergedAnnotation;
+import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -54,6 +57,7 @@ import org.springframework.core.type.StandardAnnotationMetadata;
 import org.springframework.core.type.StandardMethodMetadata;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
 /**
@@ -400,12 +404,21 @@ class ConfigurationClassBeanDefinitionReader {
 
 		private final String derivedBeanName;
 
+		/**
+		 * 当我们解析到一个@bean的方法的时候--需要把该方法的所有信息变成bd方便以后实例化
+		 * @param configClass
+		 * @param beanMethodMetadata
+		 * @param derivedBeanName
+		 */
 		public ConfigurationClassBeanDefinition(
 				ConfigurationClass configClass, MethodMetadata beanMethodMetadata, String derivedBeanName) {
-
+			//载体类的元数据
 			this.annotationMetadata = configClass.getMetadata();
+			//载体方法上的元数据
 			this.factoryMethodMetadata = beanMethodMetadata;
+			//bean的名字
 			this.derivedBeanName = derivedBeanName;
+
 			setResource(configClass.getResource());
 			setLenientConstructorResolution(false);
 		}

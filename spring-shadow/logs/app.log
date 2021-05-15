@@ -1,0 +1,67 @@
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.context.support.AbstractApplicationContext 620 prepareRefresh - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@1a9c38eb
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider 456 scanCandidateComponents - Identified candidate component class: file [E:\work\code\spring-framework\spring-shadow\out\production\classes\com\spring\BeanPostPorcessor\MyBeanPostPorcessor.class]
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider 456 scanCandidateComponents - Identified candidate component class: file [E:\work\code\spring-framework\spring-shadow\out\production\classes\com\spring\BeanPostPorcessor\MyService.class]
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider 456 scanCandidateComponents - Identified candidate component class: file [E:\work\code\spring-framework\spring-shadow\out\production\classes\com\spring\BeanPostPorcessor\aspect\MyAspect.class]
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerProcessor'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerFactory'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'myBeanPostPorcessor'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'org.springframework.aop.config.internalAutoProxyCreator'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'config'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.aop.aspectj.annotation.ReflectiveAspectJAdvisorFactory 258 getAdvice - Found AspectJ method: public void com.spring.BeanPostPorcessor.aspect.MyAspect.ad()
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'myService'
+2021.05.16 at 00:43:24 CST DEBUG org.springframework.beans.factory.support.DefaultSingletonBeanRegistry 225 getSingleton - Creating shared instance of singleton bean 'myAspect'
+2021.05.16 at 00:43:24 CST DEBUG com.spring.BeanPostPorcessor.MyBeanPostPorcessor 35 printf - org.springframework.context.annotation.AnnotationConfigApplicationContext@1a9c38eb, started on Sun May 16 00:43:24 CST 2021
+2021.05.16 at 00:44:35 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 36 printf - org.springframework.context.annotation.AnnotationConfigApplicationContext@1a9c38eb, started on Sun May 16 00:44:34 CST 2021
+2021.05.16 at 00:49:54 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 449 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 00:49:54 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 36 printf - org.springframework.context.annotation.AnnotationConfigApplicationContext@2ece4966, started on Sun May 16 00:49:19 CST 2021
+2021.05.16 at 00:51:05 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 449 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 00:51:49 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 449 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 00:51:49 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 00:52:19 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 449 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 00:52:19 CST INFO  com.spring.BeanPostPorcessor.aspect.MyAspect 22 ad - aop proxy
+2021.05.16 at 00:52:19 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 01:21:56 CST INFO  com.spring.BeanPostPorcessor.bean.Y 12 printf - com.spring.BeanPostPorcessor.bean.X@5b057c8c
+2021.05.16 at 01:22:26 CST INFO  com.spring.BeanPostPorcessor.bean.Y 12 printf - null
+2021.05.16 at 02:01:19 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 456 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:01:19 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:02:08 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 456 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:02:09 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:02:49 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:03:56 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:13:40 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:13:40 CST INFO  com.spring.BeanPostPorcessor.aspect.MyAspect 22 ad - aop proxy
+2021.05.16 at 02:13:40 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 02:14:19 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:14:19 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 02:14:19 CST INFO  com.spring.BeanPostPorcessor.aspect.MyAspect 23 ad - aop proxy
+2021.05.16 at 02:15:34 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:15:34 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:15:34 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 02:15:34 CST INFO  com.spring.BeanPostPorcessor.aspect.MyAspect 23 ad - aop proxy
+2021.05.16 at 02:16:48 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:16:49 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:16:49 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 02:16:49 CST INFO  com.spring.BeanPostPorcessor.aspect.MyAspect 23 ad - aop proxy
+2021.05.16 at 02:17:24 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:17:24 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:17:24 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 02:18:09 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:18:09 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:18:09 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 38 printf - org.springframework.context.annotation.AnnotationConfigApplicationContext@3c9bfddc, started on Sun May 16 02:18:08 CST 2021
+2021.05.16 at 02:18:56 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:18:56 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:18:56 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 38 printf - app-org.springframework.context.annotation.AnnotationConfigApplicationContext@1a9c38eb, started on Sun May 16 02:18:55 CST 2021
+2021.05.16 at 02:19:29 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:19:29 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:19:30 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 38 printf - app-org.springframework.context.annotation.AnnotationConfigApplicationContext@3c9bfddc, started on Sun May 16 02:19:29 CST 2021
+2021.05.16 at 02:19:57 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 38 printf - app-null
+2021.05.16 at 02:20:40 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 38 printf - app-org.springframework.context.annotation.AnnotationConfigApplicationContext@1a9c38eb, started on Sun May 16 02:20:39 CST 2021
+2021.05.16 at 02:21:52 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 458 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:21:52 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:21:52 CST INFO  com.spring.BeanPostPorcessor.MyService 12 xx - xx
+2021.05.16 at 02:53:41 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.16 at 02:54:05 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 460 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021.05.16 at 02:54:05 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init

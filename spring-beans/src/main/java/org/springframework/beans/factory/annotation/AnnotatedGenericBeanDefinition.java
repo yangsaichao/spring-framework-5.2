@@ -68,6 +68,12 @@ public class AnnotatedGenericBeanDefinition extends GenericBeanDefinition implem
 	 * @param metadata the annotation metadata for the bean class in question
 	 * @since 3.1.1
 	 */
+
+	/**
+	 * 当我们提供一个配置类的时候需要调用这个构造方法
+	 *
+	 * @param metadata
+	 */
 	public AnnotatedGenericBeanDefinition(AnnotationMetadata metadata) {
 		Assert.notNull(metadata, "AnnotationMetadata must not be null");
 		if (metadata instanceof StandardAnnotationMetadata) {

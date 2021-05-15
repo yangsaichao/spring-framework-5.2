@@ -6,12 +6,14 @@ import com.live.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.asm.ClassReader;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Description;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 /**
  * 恨不能放一张微信二维码啊
@@ -37,6 +39,15 @@ public class LiveTest {
 	 */
 	@Test
 	public void testScan(){
+//		Enhancer enhancer = new Enhancer();
+//		enhancer.setCallback(new MethodInterceptor() {
+//			@Override
+//			public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+//				methodProxy.invokeSuper()
+//				return null;
+//			}
+//		});
+
 		//初始化完了
 		AnnotationConfigApplicationContext context =
 				new AnnotationConfigApplicationContext(LiveAppconfig.class);

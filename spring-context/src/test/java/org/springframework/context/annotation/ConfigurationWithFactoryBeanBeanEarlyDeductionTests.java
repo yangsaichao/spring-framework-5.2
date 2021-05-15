@@ -89,11 +89,14 @@ public class ConfigurationWithFactoryBeanBeanEarlyDeductionTests {
 		// beanDefinition.hasBeanClass() returns false so we need to actually
 		// call determineTargetType ourselves
 		GenericBeanDefinition factoryBeanDefinition = new GenericBeanDefinition();
+
 		factoryBeanDefinition.setBeanClassName(GenericClassConfiguration.class.getName());
 		GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+
 		beanDefinition.setBeanClass(FactoryBean.class);
 		beanDefinition.setFactoryBeanName("factoryBean");
 		beanDefinition.setFactoryMethodName("myBean");
+
 		GenericApplicationContext context = new GenericApplicationContext();
 		try {
 			context.registerBeanDefinition("factoryBean", factoryBeanDefinition);
