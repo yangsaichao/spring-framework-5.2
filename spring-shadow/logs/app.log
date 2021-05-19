@@ -65,3 +65,47 @@
 2021.05.16 at 02:53:41 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
 2021.05.16 at 02:54:05 CST INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker 460 postProcessAfterInitialization - Bean 'myService' of type [com.spring.BeanPostPorcessor.MyService] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
 2021.05.16 at 02:54:05 CST INFO  com.spring.BeanPostPorcessor.MyBeanPostPorcessor 33 init - init
+2021.05.19 at 06:27:32 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'z': Unsatisfied dependency expressed through method 'setA' parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.spring.introspector.bean.A' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2021.05.19 at 06:28:14 CST INFO  com.spring.introspector.bean.Z 22 setA - a
+2021.05.19 at 06:30:23 CST INFO  com.spring.introspector.bean.Z 22 setA - a
+2021.05.19 at 06:45:30 CST INFO  com.spring.introspector.bean.Z 22 setA - a
+2021.05.19 at 06:48:29 CST INFO  com.spring.introspector.bean.Z 22 setA - a
+2021.05.19 at 06:49:15 CST INFO  com.spring.introspector.bean.Z 22 setA - a
+2021.05.19 at 06:51:20 CST INFO  com.spring.introspector.bean.Z 22 setA - a
+2021.05.19 at 07:15:56 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 07:15:56 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 07:15:56 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 07:15:56 CST INFO  com.spring.introspector.bean.A 28 setX - x-com.spring.introspector.bean.X@f74e835
+2021.05.19 at 07:15:56 CST INFO  com.spring.introspector.bean.A 22 setZ - z-com.spring.introspector.bean.Z@3276732
+2021.05.19 at 07:15:56 CST INFO  com.spring.introspector.bean.A 33 printf - y-com.spring.introspector.bean.Y@4052274f
+2021.05.19 at 07:58:45 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 08:22:27 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 08:22:39 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 08:23:31 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 08:27:11 CST INFO  com.spring.introspector.bean.A 29 setX - x-com.spring.introspector.bean.X@db44aa2
+2021.05.19 at 08:27:11 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 08:38:54 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 08:42:54 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 08:51:36 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 08:56:02 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 08:56:02 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 08:56:06 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 08:56:06 CST INFO  com.spring.introspector.bean.A 31 setX - x-com.spring.introspector.bean.X@72c927f1
+2021.05.19 at 08:56:06 CST INFO  com.spring.introspector.bean.A 24 setZ - z-com.spring.introspector.bean.Z@1ac85b0c
+2021.05.19 at 08:56:15 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 08:56:15 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 08:57:05 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 09:00:31 CST INFO  com.spring.introspector.bean.A 31 setX - x-com.spring.introspector.bean.X@72c927f1
+2021.05.19 at 09:00:31 CST INFO  com.spring.introspector.bean.A 24 setZ - z-com.spring.introspector.bean.Z@1ac85b0c
+2021.05.19 at 09:01:38 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 09:01:38 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 09:01:38 CST INFO  com.spring.introspector.bean.A 24 setZ - z-com.spring.introspector.bean.Z@3574e198
+2021.05.19 at 09:01:44 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 09:02:07 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 09:03:02 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 09:03:23 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 09:03:23 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 09:03:55 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.19 at 09:05:23 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
+2021.05.19 at 09:05:23 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
+2021.05.19 at 09:05:26 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y

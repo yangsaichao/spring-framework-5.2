@@ -9,6 +9,8 @@ import com.spring.BeanPostPorcessor.config.Config;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class TestBeanPostProcessor {
 
 	@Test
@@ -30,7 +32,9 @@ public class TestBeanPostProcessor {
 				= new AnnotationConfigApplicationContext();
 
 
-
+		ReentrantLock l = null;
+		l.lock();
+		l.unlock();
 
 		context.register(X.class, Y.class, MyInstantiationAwareBeanPostProcessor.class);
 		context.refresh();
