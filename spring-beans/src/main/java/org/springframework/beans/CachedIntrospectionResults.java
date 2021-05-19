@@ -176,6 +176,8 @@ public final class CachedIntrospectionResults {
 		}
 
 		results = new CachedIntrospectionResults(beanClass);
+
+
 		ConcurrentMap<Class<?>, CachedIntrospectionResults> classCacheToUse;
 
 		if (ClassUtils.isCacheSafe(beanClass, CachedIntrospectionResults.class.getClassLoader()) ||
