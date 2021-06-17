@@ -403,6 +403,7 @@ final class PostProcessorRegistrationDelegate {
 
 		for (BeanDefinitionRegistryPostProcessor postProcessor : postProcessors) {
 			postProcessor.postProcessBeanDefinitionRegistry(registry);
+
 		}
 	}
 

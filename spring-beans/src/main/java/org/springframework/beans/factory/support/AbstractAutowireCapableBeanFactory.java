@@ -604,11 +604,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						mbd.getResourceDescription(), beanName, "Initialization of bean failed", ex);
 			}
 		}
-
-		if (earlySingletonExposure) {
+		//到这里其实bean的生命周期基本走完 --假设是a，如果有代理已经完成了代理错了proxya
+		if (earlySingletonExposure) {//判断是否允许循环依赖，默认是允许的
+			//拿出提前暴露的那个对象
 			Object earlySingletonReference = getSingleton(beanName, false);
 			if (earlySingletonReference != null) {
 				if (exposedObject == bean) {
+					//如果相同则直接赋值表示没有问题
 					exposedObject = earlySingletonReference;
 				}
 				else if (!this.allowRawInjectionDespiteWrapping && hasDependentBean(beanName)) {
@@ -620,6 +622,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						}
 					}
 					if (!actualDependentBeans.isEmpty()) {
+						//如果不相同则出异常
 						throw new BeanCurrentlyInCreationException(beanName,
 								"Bean with name '" + beanName + "' has been injected into other beans [" +
 								StringUtils.collectionToCommaDelimitedString(actualDependentBeans) +

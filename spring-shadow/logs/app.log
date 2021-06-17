@@ -109,3 +109,208 @@
 2021.05.19 at 09:05:23 CST INFO  com.spring.introspector.bean.X 11 <init> - create x
 2021.05.19 at 09:05:23 CST INFO  com.spring.introspector.bean.Z 11 <init> - create z
 2021.05.19 at 09:05:26 CST INFO  com.spring.introspector.bean.Y 11 <init> - create y
+2021.05.24 at 19:18:28 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@1c55f277
+2021.05.24 at 19:25:54 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@64df9a61
+2021.05.24 at 19:25:54 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@64df9a61
+2021.05.24 at 19:26:17 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@702ed190
+2021.05.24 at 19:26:17 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@702ed190
+2021.05.24 at 19:27:21 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@273c947f
+2021.05.24 at 19:27:21 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@273c947f
+2021.05.24 at 19:27:52 CST INFO  com.spring.earlyBean.bean.B 15 print - a:com.spring.earlyBean.bean.A@30272916
+2021.05.24 at 19:28:17 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.05.24 at 19:28:17 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.05.24 at 19:28:17 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.05.24 at 19:28:17 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.05.24 at 19:29:13 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.05.24 at 19:29:13 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'a': Bean with name 'a' has been injected into other beans [b] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using 'getBeanNamesForType' with the 'allowEagerInit' flag turned off, for example.
+2021.05.24 at 19:30:33 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.05.24 at 19:30:33 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'a': Bean with name 'a' has been injected into other beans [b] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using 'getBeanNamesForType' with the 'allowEagerInit' flag turned off, for example.
+2021.05.24 at 19:32:10 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.05.24 at 19:35:37 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'a': Bean with name 'a' has been injected into other beans [b] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using 'getBeanNamesForType' with the 'allowEagerInit' flag turned off, for example.
+2021.06.11 at 14:43:34 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.06.11 at 14:43:34 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.11 at 14:44:03 CST INFO  com.spring.earlyBean.bean.A 16 printf - info
+2021.06.11 at 14:44:03 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.11 at 15:29:58 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'a': Unsatisfied dependency expressed through field 'b'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'b': Unsatisfied dependency expressed through field 'a'; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'a' is expected to be of type 'com.spring.earlyBean.bean.A' but was actually of type 'com.sun.proxy.$Proxy35'
+2021.06.11 at 15:30:25 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'a': Unsatisfied dependency expressed through field 'b'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'b': Unsatisfied dependency expressed through field 'a'; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'a' is expected to be of type 'com.spring.earlyBean.bean.A' but was actually of type 'com.sun.proxy.$Proxy35'
+2021.06.11 at 15:30:45 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'b': Unsatisfied dependency expressed through field 'a'; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'a' is expected to be of type 'com.spring.earlyBean.bean.A' but was actually of type 'com.sun.proxy.$Proxy34'
+2021.06.11 at 15:31:39 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'b': Unsatisfied dependency expressed through field 'a'; nested exception is org.springframework.beans.factory.BeanNotOfRequiredTypeException: Bean named 'a' is expected to be of type 'com.spring.earlyBean.bean.A' but was actually of type 'com.sun.proxy.$Proxy34'
+2021.06.11 at 15:37:52 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.11 at 15:37:53 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.11 at 16:53:43 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.11 at 16:53:43 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.11 at 17:45:33 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.11 at 17:45:33 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.11 at 19:49:09 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.11 at 19:49:09 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:53:02 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:53:02 CST INFO  com.spring.earlyBean.aspect.MyAspect 26 ad1 - aop proxy1
+2021.06.16 at 19:53:02 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:53:38 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:53:38 CST INFO  com.spring.earlyBean.aspect.MyAspect 31 ad2 - aop proxy2
+2021.06.16 at 19:53:38 CST INFO  com.spring.earlyBean.aspect.MyAspect 26 ad1 - aop proxy1
+2021.06.16 at 19:53:38 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:53:47 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:53:47 CST INFO  com.spring.earlyBean.aspect.MyAspect 31 ad2 - aop proxy2
+2021.06.16 at 19:53:47 CST INFO  com.spring.earlyBean.aspect.MyAspect 26 ad1 - aop proxy1
+2021.06.16 at 19:53:47 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:53:53 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:53:53 CST INFO  com.spring.earlyBean.aspect.MyAspect 31 ad2 - aop proxy2
+2021.06.16 at 19:53:53 CST INFO  com.spring.earlyBean.aspect.MyAspect 26 ad1 - aop proxy1
+2021.06.16 at 19:53:53 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:54:06 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:54:06 CST INFO  com.spring.earlyBean.aspect.MyAspect 26 ad1 - aop proxy1
+2021.06.16 at 19:54:06 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:54:13 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:54:13 CST INFO  com.spring.earlyBean.aspect.MyAspect 26 ad1 - aop proxy1
+2021.06.16 at 19:54:13 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 19:54:31 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:54:31 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad1 - aop proxy1
+2021.06.16 at 19:54:31 CST INFO  com.spring.earlyBean.aspect.MyAspect 25 ad - aop proxy
+2021.06.16 at 19:54:39 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:54:39 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad1 - aop proxy1
+2021.06.16 at 19:54:39 CST INFO  com.spring.earlyBean.aspect.MyAspect 25 ad - aop proxy
+2021.06.16 at 19:54:51 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 19:54:51 CST INFO  com.spring.earlyBean.aspect.MyAspect 25 ad1 - aop proxy1
+2021.06.16 at 19:54:51 CST INFO  com.spring.earlyBean.aspect.MyAspect 21 ad - aop proxy
+2021.06.16 at 23:08:15 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:10:27 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:11:02 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:12:04 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:12:36 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:13:16 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:13:16 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:13:51 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:13:51 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:14:17 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:15:03 CST INFO  com.spring.earlyBean.aspect.MyAspect 22 recordUsage - Introductions
+2021.06.16 at 23:15:03 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:15:51 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:15:51 CST INFO  com.spring.earlyBean.aspect.MyAspect 24 recordUsage - Introductions
+2021.06.16 at 23:15:51 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:17:30 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:18:01 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:18:46 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'config': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: warning no match for this type name: i [Xlint:invalidAbsoluteTypeName]
+2021.06.16 at 23:19:20 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:19:45 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:20:00 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:20:57 CST INFO  com.spring.earlyBean.bean.A 13 printf - info
+2021.06.16 at 23:33:04 CST INFO  com.spring.earlyBean.bean.B 17 printf - bp
+2021.06.16 at 23:34:12 CST INFO  com.spring.earlyBean.bean.B 13 printf - bp
+2021.06.16 at 23:34:24 CST INFO  com.spring.earlyBean.aspect.MyAspect 32 recordUsage - Introductions
+2021.06.16 at 23:34:24 CST INFO  com.spring.earlyBean.bean.B 15 printf - bp
+2021.06.16 at 23:35:14 CST INFO  com.spring.earlyBean.aspect.MyAspect 32 recordUsage - Introductions
+2021.06.16 at 23:35:14 CST INFO  com.spring.earlyBean.bean.B 15 printf - bp
+2021.06.16 at 23:42:21 CST INFO  com.spring.earlyBean.aspect.MyAspect 32 recordUsage - Introductions
+2021.06.16 at 23:42:21 CST INFO  com.spring.earlyBean.bean.B 15 printf - bp
+2021.06.16 at 23:45:00 CST INFO  com.spring.earlyBean.aspect.MyAspect 32 recordUsage - Introductions
+2021.06.16 at 23:45:00 CST INFO  com.spring.earlyBean.bean.B 15 printf - bp
+2021.06.16 at 23:45:25 CST INFO  com.spring.earlyBean.bean.B 15 printf - bp
+2021.06.17 at 01:12:42 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:12:42 CST INFO  com.spring.earlyBean.aspect.MyAspect 29 ad - aop proxy
+2021.06.17 at 01:13:34 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:13:34 CST INFO  com.spring.earlyBean.aspect.MyAspect 29 ad - aop proxy
+2021.06.17 at 01:13:54 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:13:54 CST INFO  com.spring.earlyBean.aspect.MyAspect 29 ad - aop proxy
+2021.06.17 at 01:17:46 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:17:46 CST INFO  com.spring.earlyBean.aspect.MyAspect 35 ad - aop proxy
+2021.06.17 at 01:18:45 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:20:41 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:20:41 CST INFO  com.spring.earlyBean.aspect.MyAspect 40 ad - aop proxy
+2021.06.17 at 01:21:03 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:21:03 CST INFO  com.spring.earlyBean.aspect.MyAspect 40 ad - aop proxy
+2021.06.17 at 01:22:25 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:28:43 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'config': Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: Pointcut is not well-formed: expecting 'pointcut name' at character position 1
+@Within(com.spring.earlyBean.anno.Shadow)
+ ^^^^^^
+
+2021.06.17 at 01:29:53 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:29:53 CST INFO  com.spring.earlyBean.aspect.MyAspect 45 ad - aop proxy
+2021.06.17 at 01:29:53 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:29:53 CST INFO  com.spring.earlyBean.aspect.MyAspect 45 ad - aop proxy
+2021.06.17 at 01:30:15 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:30:15 CST INFO  com.spring.earlyBean.aspect.MyAspect 45 ad - aop proxy
+2021.06.17 at 01:30:15 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:30:15 CST INFO  com.spring.earlyBean.aspect.MyAspect 45 ad - aop proxy
+2021.06.17 at 01:30:15 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:36:15 CST INFO  com.spring.earlyBean.bean.C 11 cprint - cprint
+2021.06.17 at 01:37:02 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:37:02 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:37:02 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:37:02 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:37:02 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:38:07 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:38:07 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:38:07 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:38:07 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:38:07 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:38:31 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:38:31 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:38:31 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:38:31 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:38:31 CST INFO  com.spring.earlyBean.bean.C 11 cprint - cprint
+2021.06.17 at 01:38:31 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:39:00 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:39:00 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:39:00 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:39:00 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:39:00 CST INFO  com.spring.earlyBean.bean.C 11 cprint - cprint
+2021.06.17 at 01:39:00 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:39:48 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:39:48 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:39:48 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:39:48 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:39:48 CST INFO  com.spring.earlyBean.bean.C 11 cprint - cprint
+2021.06.17 at 01:39:48 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:42:03 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:42:03 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:42:03 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:42:03 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:42:03 CST INFO  com.spring.earlyBean.bean.C 11 cprint - cprint
+2021.06.17 at 01:42:03 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:45:47 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:45:47 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:45:47 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:45:47 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:45:47 CST INFO  com.spring.earlyBean.bean.C 12 printf - cccc
+2021.06.17 at 01:45:47 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:46:10 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:46:10 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:46:10 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:46:10 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:46:10 CST INFO  com.spring.earlyBean.bean.C 12 printf - cccc
+2021.06.17 at 01:46:10 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.bean.C 17 cprintf - cp
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:55:15 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.bean.C 17 cprintf - cp
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.aspect.MyAspect 51 ad - aop proxy
+2021.06.17 at 01:55:52 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.bean.C 17 cprintf - cp
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:57:16 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:57:58 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:57:59 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:57:59 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:57:59 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:57:59 CST INFO  com.spring.earlyBean.bean.C 17 cprintf - cp
+2021.06.17 at 01:57:59 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.bean.B 14 printf - bbbbb
+2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.aspect.MyAspect 53 ad - aop proxy
+2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.bean.C 17 cprintf - cp
+2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
+2021.06.17 at 18:24:57 CST INFO  com.spring.batis.service.MService 16 query - [{password=aa, name=xx, id=1}]

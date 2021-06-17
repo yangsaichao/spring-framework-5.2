@@ -5,11 +5,9 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="b" class="com.spring.supplier.B">
+	<bean id="mdao" class="com.spring.batis.util.CustomFactoryBean">
+		<property name="mapperInterface" value="com.spring.batis.dao.MDao"></property>
 	</bean>
-
-	<bean id="a" class="com.spring.supplier.A" factory-bean="b" factory-method="create"></bean>
-
 
 
 </beans>
