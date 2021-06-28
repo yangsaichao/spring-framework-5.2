@@ -35,6 +35,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.MergedBeanDefinitionPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.core.OrderComparator;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
@@ -70,9 +71,9 @@ final class PostProcessorRegistrationDelegate {
 		if (beanFactory instanceof BeanDefinitionRegistry) {
 
 			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
-			//存放所有找出来的 BeanFactoryPostProcessor
+			//存放所有找出来的 BeanFactoryPostProcessor  父类
 			List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
-			//存放所有找出来的 BeanDefinitionRegistryPostProcessor
+			//存放所有找出来的 BeanDefinitionRegistryPostProcessor  子类的
 			List<BeanDefinitionRegistryPostProcessor> registryProcessors = new ArrayList<>();
 
 			//遍历beanFactoryPostProcessors 方法传进来的一个list集合
@@ -205,6 +206,11 @@ final class PostProcessorRegistrationDelegate {
 			//这里为是什么需要进行一个while得循环?
 
 			//执行所有没有实现PriorityOrdered 没有Ordered的BeanDefinitionRegistryPostProcessor的bean
+			/**
+			 * 为什么还需要找一次
+			 * 这是因为执行子类的时候会往bdmap当中添加一些新的bd
+			 * 而这些bd有可能就是属于子类
+			 */
 			while (reiterate) {
 				reiterate = false;
 				postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
@@ -213,11 +219,13 @@ final class PostProcessorRegistrationDelegate {
 						currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
 						processedBeans.add(ppName);
 						//如果能够找到一个说明可能会往容器当中添加新的bd
+						//如果能够再次找到一个BeanDefinitionRegistryPostProcessor 那么需要再次循环（再次找一遍）
 						reiterate = true;
 					}
 				}
 				sortPostProcessors(currentRegistryProcessors, beanFactory);
 				registryProcessors.addAll(currentRegistryProcessors);
+				//执行子类的子类方法
 				invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
 				currentRegistryProcessors.clear();
 			}

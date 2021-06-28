@@ -314,3 +314,7 @@
 2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.bean.C 17 cprintf - cp
 2021.06.17 at 01:58:25 CST INFO  com.spring.earlyBean.bean.Z 12 printf - zzzz
 2021.06.17 at 18:24:57 CST INFO  com.spring.batis.service.MService 16 query - [{password=aa, name=xx, id=1}]
+2021.06.18 at 22:00:14 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.18 at 22:04:30 CST INFO  com.spring.earlyBean.bean.A 15 printf - info
+2021.06.18 at 22:37:26 CST INFO  com.spring.earlyBean.aspect.MyAspect 48 ad - aop proxy
+2021.06.24 at 20:35:16 CST WARN  org.springframework.context.support.AbstractApplicationContext 583 refresh - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.spring.batis.app.BatisConfig]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'yy' for bean class [com.spring.batis.util.bean.Y] conflicts with existing, non-compatible bean definition of same name and class [com.spring.batis.service.Y]

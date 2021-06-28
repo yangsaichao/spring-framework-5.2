@@ -532,6 +532,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Invoke factory processors registered as beans in the context.
 				/**
+				 *
+				 * 扫描--一定会干的事情
 				 * 1、执行完程序需要提供的bfpp之后会调用clearMetadataCache
 				 * 就是会根据是否冻结去标识接下来获取bd的时候是否要重新merged
 				 * 就是接下来所有的获取bd操作是否需要拿最新的

@@ -2,7 +2,7 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<Pattern>
-				%file l=%line %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+				文件=%file 行数=%line %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
 			</Pattern>
 		</encoder>
 	</appender>

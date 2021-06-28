@@ -916,6 +916,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 			//在自己写的bfpp当中冻结了之后再去修改了 bd的属性
 			//所以这里获取的是老的，不是最新的，表示你修改的bd不会生效
+			//从bdmap当中根据bean的名字获取出来一个bd
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 				if (isFactoryBean(beanName)) {
