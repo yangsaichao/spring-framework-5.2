@@ -5,12 +5,11 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
 @Slf4j(topic = "e")
 public class Y {
 
 	@PostConstruct
 	public void init(){
-		log.debug("-------");
+		//log.debug("-------");
 	}
 }

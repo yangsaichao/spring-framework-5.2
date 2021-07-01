@@ -21,9 +21,6 @@ import javax.sql.DataSource;
 //批量注入dao --原理--批量往spring容器里面添加对象
 //@CustomScan
 //@Import(CustomImportBeanDefinitionRegistart.class)
-//@ImportResource("classpath:spring.xml")
-@EnableAspectJAutoProxy
-@MapperScan
 public class BatisConfig {
 
 

@@ -336,8 +336,9 @@ final class PostProcessorRegistrationDelegate {
 		for (String ppName : postProcessorNames) {
 			if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {
 				//comm  --init
-				//mybpp---无法解析@PostC
+				//mybpp
 				BeanPostProcessor pp = beanFactory.getBean(ppName, BeanPostProcessor.class);
+
 				priorityOrderedPostProcessors.add(pp);
 				if (pp instanceof MergedBeanDefinitionPostProcessor) {
 					internalPostProcessors.add(pp);

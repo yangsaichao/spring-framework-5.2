@@ -5,12 +5,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component
-@Slf4j(topic = "e")
-public class Z {
 
-	@PostConstruct
-	public void init(){
-		log.debug("-------");
-	}
+public interface Z {
+	public void print();
+	public void setY(Y y);
+
 }
