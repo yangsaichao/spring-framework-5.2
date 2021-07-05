@@ -223,6 +223,8 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 
 
 	/**
+	 *
+	 * 很多事情-----扫描
 	 * Derive further bean definitions from the configuration classes in the registry.
 	 */
 	@Override
@@ -336,6 +338,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
 		do {
 			//candidates  配置的集合内部做遍历 parse
+			//完成了扫描
 			parser.parse(candidates);
 
 			parser.validate();

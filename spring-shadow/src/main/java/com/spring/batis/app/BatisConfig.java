@@ -2,10 +2,7 @@ package com.spring.batis.app;
 
 import com.spring.batis.dao.MDao;
 import com.spring.batis.dao.XDao;
-import com.spring.batis.util.CustomFactoryBean;
-import com.spring.batis.util.CustomImportBeanDefinitionRegistart;
-import com.spring.batis.util.CustomScan;
-import com.spring.batis.util.SqlSessionImpl;
+import com.spring.batis.util.*;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -17,10 +14,12 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@ComponentScan("com.spring.batis.beanFactoryPostProcessor")
+@ComponentScan(value = "com.spring.batis.beans" )
 //批量注入dao --原理--批量往spring容器里面添加对象
 //@CustomScan
 //@Import(CustomImportBeanDefinitionRegistart.class)
+@NXScan("com.spring.batis.beans")
+@MapperScan
 public class BatisConfig {
 
 
