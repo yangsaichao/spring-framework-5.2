@@ -512,6 +512,27 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				return false;
 			}
 		}
+
+		/**
+		 * 为什么一个加了@Component ==@Service == @Repository 能够被spring识别
+		 * 是因为扫描器包含了一些 includeFilter 这些includeFilter当中有一个过滤器就是用来
+		 * 判断当前扫描出来的类上面是否加了@Component
+		 *
+		 * 这个过滤器时候添加进去的
+		 *
+		 * spring 实例化一个扫描器的时候被添加进去的
+		 * spring容器在实例化的过程当中---spring容器的生命周期
+		 * 当中会实例化几个扫描器----两个
+		 *
+		 * 那么这里通过正常启动，然后读取配置上面上面的扫描信息锁用到的扫描器
+		 * 我们把他成为扫描器2
+		 *
+		 * 如果直接调用api自己指定包名来扫描用到扫描器是扫描器1
+		 *
+		 *
+		 * * spring的扫描器
+		 *
+		 */
 		for (TypeFilter tf : this.includeFilters) {
 			if (tf.match(metadataReader, getMetadataReaderFactory())) {
 				return isConditionMatch(metadataReader);

@@ -83,6 +83,8 @@ class ComponentScanAnnotationParser {
 		//默认情况下为true,如果为false那么名字策略用的是你在配置类上面配置的
 		boolean useInheritedGenerator = (BeanNameGenerator.class == generatorClass);
 
+		//如果不在配置上面配置一个 命名策略则采用默认的命名策略
+		//默认命名策略究竟是哪个对象----this.beanNameGenerator=-？
 		//给这个扫描器添加一个名字策略
 		scanner.setBeanNameGenerator(useInheritedGenerator ? this.beanNameGenerator :
 				BeanUtils.instantiateClass(generatorClass));
@@ -128,6 +130,7 @@ class ComponentScanAnnotationParser {
 			basePackages.add(ClassUtils.getPackageName(declaringClass));
 		}
 
+		//添加一个排除的过滤器---排除和配置类，类名相同的bean
 		scanner.addExcludeFilter(new AbstractTypeHierarchyTraversingFilter(false, false) {
 			@Override
 			protected boolean matchClassName(String className) {

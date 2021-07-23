@@ -170,6 +170,7 @@ final class PostProcessorRegistrationDelegate {
 			//这个方法做了很多事情
 			//1、完成了扫描
 			//完成了扫描  postProcessor.postProcessBeanDefinitionRegistry 注册bd
+			//2、对扫描出来的bd(所对应的类)上面的@Import注解的解析
 			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
 
 			//因为已经执行完了，故而需要清除这个当前list
@@ -197,6 +198,7 @@ final class PostProcessorRegistrationDelegate {
 			}
 			sortPostProcessors(currentRegistryProcessors, beanFactory);
 			registryProcessors.addAll(currentRegistryProcessors);
+
 			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
 
 			currentRegistryProcessors.clear();

@@ -3,24 +3,18 @@ package com.spring.extension.batis;
 import com.spring.batis.app.BatisConfig;
 
 
-import com.spring.batis.beans.M;
-import com.spring.batis.beans.X;
-import com.spring.batis.util.CustomClassPathScan;
+import com.spring.batis.mapper.D;
+import com.spring.batis.util.NXNameGenerator;
 import org.junit.Test;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TestBatis {
@@ -33,6 +27,9 @@ public class TestBatis {
 				= new AnnotationConfigApplicationContext();
 		context.register(BatisConfig.class);
 		context.refresh();
+
+
+
 //		String n = context.getBean(M.class).n();
 //		System.out.println(n);
 
@@ -45,12 +42,40 @@ public class TestBatis {
 
 	@Test
 	public void testScanDefault(){
+
 		AnnotationConfigApplicationContext
 				context
-				= new AnnotationConfigApplicationContext(BatisConfig.class);
+				= new AnnotationConfigApplicationContext();
+		context.scan();
+		context.setBeanNameGenerator(new  NXNameGenerator());
+		context.register(BatisConfig.class);
+		context.refresh();
 
-		System.out.println(context.getBean(X.class));
+
+
+
+
+
+
+
+
+
+
+
+
+//		context.scan("com.spring.batis.beans");
+//
+
+		//System.out.println(context.getBean(Y.class));
+
 	}
+
+
+
+
+
+
+
 
 
 	@Test
@@ -103,5 +128,20 @@ public class TestBatis {
 		}
 		System.out.println(genericBeanDefinitions);
 
+	}
+
+
+
+
+
+	@Test
+	public void testMybatisScan(){
+
+		AnnotationConfigApplicationContext
+				context
+				= new AnnotationConfigApplicationContext(BatisConfig.class);
+
+
+		context.getBean(D.class).printf();
 	}
 }

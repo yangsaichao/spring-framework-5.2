@@ -67,6 +67,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	public AnnotationConfigApplicationContext() {
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
+
 	}
 
 	/**
@@ -138,7 +139,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	public void setBeanNameGenerator(BeanNameGenerator beanNameGenerator) {
 		//给reader一个自定义的策略器
 		this.reader.setBeanNameGenerator(beanNameGenerator);
-		//给扫描仪的一个自定义的策略器
+		//给扫描器（s1 和 s2）的一个自定义的命名策略器
 		this.scanner.setBeanNameGenerator(beanNameGenerator);
 
 

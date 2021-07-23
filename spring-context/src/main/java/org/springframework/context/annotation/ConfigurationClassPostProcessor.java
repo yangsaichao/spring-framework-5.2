@@ -84,6 +84,8 @@ import org.springframework.util.ClassUtils;
  * @author Phillip Webb
  * @author Sam Brannen
  * @since 3.0
+ *
+ *
  */
 public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPostProcessor,
 		PriorityOrdered, ResourceLoaderAware, BeanClassLoaderAware, EnvironmentAware {
@@ -135,6 +137,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	private boolean localBeanNameGeneratorSet = false;
 
 	/* Using short class names as default bean names by default. */
+	//我们调用context.setBeannameGenerator(xxx)那么这个xxx 会赋值给 componentScanBeanNameGenerator
 	private BeanNameGenerator componentScanBeanNameGenerator = AnnotationBeanNameGenerator.INSTANCE;
 
 	/* Using fully qualified class names as default bean names by default. */

@@ -421,6 +421,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 	private <T> T resolveBean(ResolvableType requiredType, @Nullable Object[] args, boolean nonUniqueAsNull) {
 		NamedBeanHolder<T> namedBean = resolveNamedBean(requiredType, args, nonUniqueAsNull);
 		if (namedBean != null) {
+			//返回了对象
 			return namedBean.getBeanInstance();
 		}
 		BeanFactory parent = getParentBeanFactory();
